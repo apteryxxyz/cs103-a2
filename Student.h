@@ -5,7 +5,7 @@
 class Student :
     public User
 {
-    string classId;
+    string classId; // ID of the class the student is in
 
 public:
     Student(User user, string classId) : User(
