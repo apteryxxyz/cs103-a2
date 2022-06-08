@@ -16,7 +16,7 @@ public:
     vector<User*> users;
 
     ~Database() {
-		// Clear the vectors to prevent memory leaks
+        // Clear the vectors to prevent memory leaks
         for (auto u : users) delete u;
         users.clear();
     }
@@ -33,7 +33,7 @@ public:
     void loadUsers() {
         fstream userDb("users.csv", ios::in);
 
-		// Loop over each line in the file
+        // Loop over each line in the file
         string line;
         while (getline(userDb, line)) {
             istringstream linestream(line);
@@ -81,7 +81,7 @@ public:
                 getline(linestream, item, ',');
                 istringstream itemstream(item);
 
-				// Student IDs are separated by a pipes
+                // Student IDs are separated by a pipes
                 while (getline(itemstream, item, '|')) {
                     studentIds.push_back(item);
                 }
