@@ -10,15 +10,24 @@
 #include "Guardian.h"
 #include "Student.h"
 
+#include "Class.h"
+#include "Report.h"
+
 class Database {
 
 public:
     vector<User*> users;
+    vector<Class*> classes;
+    vector<Report*> reports;
 
     ~Database() {
         // Clear the vectors to prevent memory leaks
         for (auto u : users) delete u;
         users.clear();
+        for (auto c : classes) delete c;
+        classes.clear();
+        for (auto r : reports) delete r;
+        reports.clear();
     }
 
     // Generate a random ID to use
@@ -104,5 +113,107 @@ public:
         for (auto i = users.begin(); i != users.end(); i++) {
             userDb << (*i)->toString() << endl;
         }
+    }
+
+    // Open and parse the classes.csv file
+    // Add class to the classes vector
+    void loadClasses() {
+        fstream classDb("classes.csv", ios::in);
+
+        string line;
+        while (getline(classDb, line)) {
+			istringstream linestream(line);
+			string item;
+
+			getline(linestream, item, ',');
+			// If line is empty, skip it
+            if (item == "") continue;
+			string id = item;
+			getline(linestream, item, ',');
+			int yLevel = stoi(item);
+
+            Class* xlass = new Class(id, yLevel);
+            classes.push_back(xlass);
+        }
+    }
+
+    // Stringify the classes vector and write it to the classes.csv file
+    void saveClasses() {
+        ofstream classDb("classes.csv", ios::trunc);
+        classDb << "";
+        for (auto i = classes.begin(); i != classes.end(); i++) {
+            classDb << (*i)->toString() << endl;
+        }
+    }
+
+    // Open and parse the reports.csv file
+    // Add class to the reports vector
+    void loadReports() {
+        fstream reportDb("reports.csv", ios::in);
+
+        string line;
+        while (getline(reportDb, line)) {
+            istringstream linestream(line);
+            string item;
+
+            getline(linestream, item, ',');
+            // If line is empty, skip it
+            if (item == "") continue;
+            string sId = item;
+            getline(linestream, item, ',');
+            string tNote = item;
+            getline(linestream, item, ',');
+            string pNote = item;
+            getline(linestream, item, ',');
+            int attendance = stoi(item);
+
+            vector<string> subjectStrings;
+            vector<SubjectReport> subjects;
+
+            getline(linestream, item, ',');
+            istringstream itemstream(item);
+			
+            while (getline(itemstream, item, '|')) {
+                istringstream propstream(item);
+                string prop;
+				
+                getline(propstream, prop, '.');
+                Subject subject = Report::resolveSubject(stoi(prop));
+                getline(propstream, prop, '.');
+                Grade grade = Report::resolveGrade(stoi(prop));
+                getline(propstream, prop, '.');
+                string note = prop;
+
+                SubjectReport sr = { subject, grade, note };
+                subjects.push_back(sr);
+            }
+			
+            Report* report = new Report(sId, tNote, pNote, attendance, subjects);
+            reports.push_back(report);
+        }
+        
+    }
+
+    // Stringify the reports vector and write it to the reports.csv file
+    void saveReports() {
+        ofstream reportDb("reports.csv", ios::trunc);
+        reportDb << "";
+        for (auto i = reports.begin(); i != reports.end(); i++) {
+            reportDb << (*i)->toString() << endl;
+        }
+    }
+
+    // Load all csv files
+    void load() {
+        loadUsers();
+        loadClasses();
+        loadReports();
+    }
+
+    // Save all vectors
+    void save() {
+        saveUsers();
+        saveClasses();
+        saveReports();
     }
 };
