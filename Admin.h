@@ -7,6 +7,7 @@ class Admin :
 {
 public:
     Admin(User user) : User(
+        user.id,
         user.firstName, user.lastName, user.dateOfBirth,
         user.gender, user.contactNumber, user.homeAddress,
         user.emailAddress, user.password
