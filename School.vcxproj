@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
+    <ClInclude Include="Database.h" />
     <ClInclude Include="Guardian.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="Teacher.h" />
