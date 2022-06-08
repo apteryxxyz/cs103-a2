@@ -12,6 +12,7 @@ class Guardian :
 
 public:
     Guardian(User user, vector<string> studentIds) : User(
+		user.id,
         user.firstName, user.lastName, user.dateOfBirth,
         user.gender, user.contactNumber, user.homeAddress,
         user.emailAddress, user.password
@@ -22,8 +23,9 @@ public:
 
     string toString() {
         ostringstream students;
+        // Because values are separate by commas, we will use | to separate student IDs
         copy(studentIds.begin(), studentIds.end() - 1,
-            ostream_iterator<string>(students, "/"));
+            ostream_iterator<string>(students, "|"));
         students << studentIds.back();
         return User::toString() + ',' + students.str();
     }
