@@ -40,7 +40,7 @@ public:
     // Open and parse the users.csv file
     // Add each student, teacher, guardian, and admin to the users vector
     void loadUsers() {
-        fstream userDb("users.csv", ios::in);
+        fstream userDb("_users.data", ios::in);
 
         // Loop over each line in the file
         string line;
@@ -48,27 +48,27 @@ public:
             istringstream linestream(line);
             string item;
 
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             // If line is empty, skip it
             if (item == "") continue;
             Type type = User::resolveType(stoi(item));
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             string id = item;
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             string fName = item;
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             string lName = item;
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             string dob = item;
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             int gender = stoi(item);
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             string cNumber = item;
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             string hAddress = item;
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             string eAddress = item;
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             string password = item;
 
             // Create the base user object and overwrite its ID
@@ -81,13 +81,13 @@ public:
                 users.push_back(admin);
             }
             if (type == Type::Teacher) {
-                getline(linestream, item, ',');
+                getline(linestream, item, '~');
                 Teacher *teacher = new Teacher(user, item);
                 users.push_back(teacher);
             }
             else if (type == Type::Guardian) {
                 vector<string> studentIds = {};
-                getline(linestream, item, ',');
+                getline(linestream, item, '~');
                 istringstream itemstream(item);
 
                 // Student IDs are separated by a pipes
@@ -99,7 +99,7 @@ public:
                 users.push_back(guardian);
             }
             else if (type == Type::Student) {
-                getline(linestream, item, ',');
+                getline(linestream, item, '~');
                 Student *student = new Student(user, item);
                 users.push_back(student);
             }
@@ -108,7 +108,7 @@ public:
 
     // Stringify the users vector and write it to the users.csv file
     void saveUsers() {
-        ofstream userDb("users.csv", ios::trunc); // Trunc will overwrite exisitng content
+        ofstream userDb("_users.data", ios::trunc); // Trunc will overwrite exisitng content
         userDb << "";
         for (auto i = users.begin(); i != users.end(); i++) {
             userDb << (*i)->toString() << endl;
@@ -118,18 +118,18 @@ public:
     // Open and parse the classes.csv file
     // Add class to the classes vector
     void loadClasses() {
-        fstream classDb("classes.csv", ios::in);
+        fstream classDb("_classes.data", ios::in);
 
         string line;
         while (getline(classDb, line)) {
 			istringstream linestream(line);
 			string item;
 
-			getline(linestream, item, ',');
+			getline(linestream, item, '~');
 			// If line is empty, skip it
             if (item == "") continue;
 			string id = item;
-			getline(linestream, item, ',');
+			getline(linestream, item, '~');
 			int yLevel = stoi(item);
 
             Class* xlass = new Class(id, yLevel);
@@ -139,7 +139,7 @@ public:
 
     // Stringify the classes vector and write it to the classes.csv file
     void saveClasses() {
-        ofstream classDb("classes.csv", ios::trunc);
+        ofstream classDb("_classes.data", ios::trunc);
         classDb << "";
         for (auto i = classes.begin(); i != classes.end(); i++) {
             classDb << (*i)->toString() << endl;
@@ -149,39 +149,39 @@ public:
     // Open and parse the reports.csv file
     // Add class to the reports vector
     void loadReports() {
-        fstream reportDb("reports.csv", ios::in);
+        fstream reportDb("_reports.data", ios::in);
 
         string line;
         while (getline(reportDb, line)) {
             istringstream linestream(line);
             string item;
 
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             // If line is empty, skip it
             if (item == "") continue;
             string sId = item;
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             string tNote = item;
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             string pNote = item;
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             int attendance = stoi(item);
 
             vector<string> subjectStrings;
             vector<SubjectReport> subjects;
 
-            getline(linestream, item, ',');
+            getline(linestream, item, '~');
             istringstream itemstream(item);
 			
             while (getline(itemstream, item, '|')) {
                 istringstream propstream(item);
                 string prop;
 				
-                getline(propstream, prop, '.');
+                getline(propstream, prop, '^');
                 Subject subject = Report::resolveSubject(stoi(prop));
-                getline(propstream, prop, '.');
+                getline(propstream, prop, '^');
                 Grade grade = Report::resolveGrade(stoi(prop));
-                getline(propstream, prop, '.');
+                getline(propstream, prop, '^');
                 string note = prop;
 
                 SubjectReport sr = { subject, grade, note };
@@ -196,7 +196,7 @@ public:
 
     // Stringify the reports vector and write it to the reports.csv file
     void saveReports() {
-        ofstream reportDb("reports.csv", ios::trunc);
+        ofstream reportDb("_reports.data", ios::trunc);
         reportDb << "";
         for (auto i = reports.begin(); i != reports.end(); i++) {
             reportDb << (*i)->toString() << endl;

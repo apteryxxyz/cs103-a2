@@ -14,7 +14,7 @@ public:
     }
 
     string toString() {
-        return id + ',' + to_string(yearLevel);
+        return id + '~' + to_string(yearLevel);
     }
 };
 

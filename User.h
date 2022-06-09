@@ -45,11 +45,11 @@ public:
     // Convert this user object into a string
     // Intended for database storage
     virtual string toString() {
-        return to_string(int(type)) + ',' +
-            this->id + ',' + firstName + ',' + lastName + ',' +
-            dateOfBirth + ',' + to_string(gender) + ',' +
-            contactNumber + ',' + homeAddress + ',' +
-            emailAddress + ',' + password;
+        return to_string(int(type)) + '~' +
+            this->id + '~' + firstName + '~' + lastName + '~' +
+            dateOfBirth + '~' + to_string(gender) + '~' +
+            contactNumber + '~' + homeAddress + '~' +
+            emailAddress + '~' + password;
     }
 
     // Resolve a number to a Type enum value

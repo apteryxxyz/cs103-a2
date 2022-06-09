@@ -62,8 +62,8 @@ public:
             str += s + "|";
         str.pop_back();
 
-        return studentId + ',' + teacherNote + ',' +
-               principalNote + ',' + to_string(attendance) + ',' +
+        return studentId + '~' + teacherNote + '~' +
+               principalNote + '~' + to_string(attendance) + '~' +
                str;
     }
 
@@ -89,8 +89,8 @@ public:
 
 private:
     string subjectToString(SubjectReport sr) {
-        return to_string(int(sr.grade)) + '.' +
-               to_string(int(sr.subject)) + '.' +
+        return to_string(int(sr.grade)) + '^' +
+               to_string(int(sr.subject)) + '^' +
                sr.note;
     }
 };

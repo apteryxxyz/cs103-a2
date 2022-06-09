@@ -27,6 +27,6 @@ public:
         copy(studentIds.begin(), studentIds.end() - 1,
             ostream_iterator<string>(students, "|"));
         students << studentIds.back();
-        return User::toString() + ',' + students.str();
+        return User::toString() + '~' + students.str();
     }
 };
