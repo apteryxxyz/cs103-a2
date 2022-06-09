@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+// Clear screen cross platform
 #ifdef _WIN32
 #define CLEAR "cls"
 #else
@@ -46,7 +47,7 @@ public:
     void run(bool clearBefore, bool clearAfter) {
         // Clear the screen if requested
         if (clearBefore) system(CLEAR);
-        cout << header << endl;
+        cout << header;
 
         // Print the options
         for (int i = 0; i < options.size(); i++)
