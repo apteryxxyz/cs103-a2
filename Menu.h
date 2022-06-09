@@ -60,16 +60,17 @@ public:
         if (clearAfter) system(CLEAR);
 
         // Call the handleOption method with the selected option
-        handleOption(selectedOption);
+        bool runAgain = handleOption(selectedOption);
 
-        // Once the option has been handled, run the menu again
-        return run(clearBefore, clearAfter);
+        // If should run again, do so
+        if (runAgain) run(clearBefore, clearAfter);
     }
 
     // Handle an option
     // This method is abstract and must be overwritten
-    virtual void handleOption(int option) {
+    virtual bool handleOption(int option) {
         cout << "Menu has not been implemented.\n";
+        return false;
     }
 };
 
