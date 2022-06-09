@@ -364,6 +364,8 @@ FodyWeavers.xsd
 
 # Database files
 *.csv
+*.data
+_*.data
 
 # MacOS files
 .DS_Store

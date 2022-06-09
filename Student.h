@@ -19,6 +19,6 @@ public:
     }
 
     string toString() {
-        return User::toString() + ',' + classId;
+        return User::toString() + '~' + classId;
     }
 };
