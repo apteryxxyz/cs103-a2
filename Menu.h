@@ -3,6 +3,12 @@
 #include <string>
 #include <vector>
 
+#ifdef _WIN32
+#define CLEAR "cls"
+#else
+#define CLEAR "clear"
+#endif
+
 using namespace std;
 
 class Menu {
@@ -39,7 +45,7 @@ public:
     // Call this menu
     void run(bool clearBefore, bool clearAfter) {
         // Clear the screen if requested
-        if (clearBefore) system("cls");
+        if (clearBefore) system(CLEAR);
         cout << header << endl;
 
         // Print the options
@@ -51,7 +57,7 @@ public:
         int selectedOption = requestNumber(1, maxOption);
         
         // Clear the screen if requested
-        if (clearAfter) system("cls");
+        if (clearAfter) system(CLEAR);
 
         // Call the handleOption method with the selected option
         handleOption(selectedOption);
