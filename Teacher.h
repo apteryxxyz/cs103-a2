@@ -5,9 +5,9 @@
 class Teacher :
     public User
 {
+public:
     string classId; // The ID of the class this teacher teaches
     
-public:
     Teacher(User user, string classId) : User(
         user.id,
         user.firstName, user.lastName, user.dateOfBirth,

@@ -5,9 +5,9 @@
 class Student :
     public User
 {
+public:
     string classId; // ID of the class the student is in
 
-public:
     Student(User user, string classId) : User(
         user.id,
         user.firstName, user.lastName, user.dateOfBirth,

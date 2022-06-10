@@ -8,9 +8,9 @@
 class Guardian :
     public User
 {
-    vector<string> studentIds; // A list of student IDs that the guardian is responsible for
-
 public:
+  	vector<string> studentIds; // A list of student IDs that the guardian is responsible for
+
     Guardian(User user, vector<string> studentIds) : User(
         user.id,
         user.firstName, user.lastName, user.dateOfBirth,
