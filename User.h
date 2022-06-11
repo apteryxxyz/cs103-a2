@@ -27,7 +27,7 @@ public:
 
     User(
         string i,
-        string f, string l, string d, string g,
+        string f, string l, string d, int g,
         string c, string h, string e, string p
     ) {
         type = Type::Base;
