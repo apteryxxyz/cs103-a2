@@ -81,5 +81,16 @@ public:
         cout << "Menu has not been implemented.\n";
         return false;
     }
-};
 
+	// Quick way to show a basic mini menu
+    static int runMiniMenu(vector<string> options) {
+        // Create a menu object so we can access the requestNumber method
+        Menu menu;
+
+        for (int i = 0; i < options.size(); i++)
+            cout << i + 1 << ". " << options[i] << endl;
+
+		int maxOption = options.size();
+		return menu.requestNumber(1, maxOption);
+    }
+};
