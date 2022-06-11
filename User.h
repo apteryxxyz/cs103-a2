@@ -19,7 +19,7 @@ public:
         firstName, // First name
         lastName, // The last name
         dateOfBirth; // Date of birth in the format of DD/MM/YYYY
-    int gender; // 1 = male, 2 = female, 3 = other
+    int gender; // Refer to ISO/IEC 5218
     string contactNumber, // Contact number
         homeAddress, // Street address
         emailAddress, // Email address
@@ -27,7 +27,7 @@ public:
 
     User(
         string i,
-        string f, string l, string d, int g,
+        string f, string l, string d, string g,
         string c, string h, string e, string p
     ) {
         type = Type::Base;
