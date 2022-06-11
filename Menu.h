@@ -14,7 +14,10 @@ using namespace std;
 
 class Menu {
 
-private:
+public:
+    string header;
+    vector<string> options;
+
     // Ask for a number from the user
     int requestNumber(int min, int max) {
         int num; string str;
@@ -24,7 +27,8 @@ private:
         try {
             // Try and convert the inputted string to an integer
             num = stoi(str);
-        } catch (exception e) {
+        }
+        catch (exception e) {
             // If it cant be converted, it is not a number
             cout << "Input is not a number, please try again.\n";
             return requestNumber(min, max);
@@ -38,10 +42,14 @@ private:
 
         return num;
     }
-    
-public:
-    string header;
-    vector<string> options;
+
+    // Ask for a string from the user
+    string requestString() {
+        string str;
+        cout << "> ";
+        cin >> str;
+        return str;
+    }
     
     // Call this menu
     void run(bool clearBefore, bool clearAfter) {
@@ -73,5 +81,16 @@ public:
         cout << "Menu has not been implemented.\n";
         return false;
     }
-};
 
+	// Quick way to show a basic mini menu
+    static int runMiniMenu(vector<string> options) {
+        // Create a menu object so we can access the requestNumber method
+        Menu menu;
+
+        for (int i = 0; i < options.size(); i++)
+            cout << i + 1 << ". " << options[i] << endl;
+
+		int maxOption = options.size();
+		return menu.requestNumber(1, maxOption);
+    }
+};
