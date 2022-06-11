@@ -104,6 +104,8 @@ public:
                 users.push_back(student);
             }
         }
+		
+        userDb.close();
     }
 
     // Stringify the users vector and write it to the users.csv file
@@ -113,6 +115,7 @@ public:
         for (auto i = users.begin(); i != users.end(); i++) {
             userDb << (*i)->toString() << endl;
         }
+        userDb.close();
     }
 
     // Open and parse the classes.csv file
@@ -135,6 +138,8 @@ public:
             Class* xlass = new Class(id, yLevel);
             classes.push_back(xlass);
         }
+		
+        classDb.close();
     }
 
     // Stringify the classes vector and write it to the classes.csv file
@@ -144,6 +149,7 @@ public:
         for (auto i = classes.begin(); i != classes.end(); i++) {
             classDb << (*i)->toString() << endl;
         }
+        classDb.close();
     }
 
     // Open and parse the reports.csv file
@@ -192,6 +198,7 @@ public:
             reports.push_back(report);
         }
         
+        reportDb.close();
     }
 
     // Stringify the reports vector and write it to the reports.csv file
@@ -201,6 +208,7 @@ public:
         for (auto i = reports.begin(); i != reports.end(); i++) {
             reportDb << (*i)->toString() << endl;
         }
+        reportDb.close();
     }
 
     // Load all csv files
