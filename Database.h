@@ -14,11 +14,14 @@
 #include "Report.h"
 
 class Database {
-
 public:
     vector<User*> users;
     vector<Class*> classes;
     vector<Report*> reports;
+
+    Database() {
+        srand(time(NULL));
+    }
 
     ~Database() {
         // Clear the vectors to prevent memory leaks
@@ -32,9 +35,8 @@ public:
 
     // Generate a random ID to use
     static string generateId() {
-        string obj;
-        uint32_t rawId = reinterpret_cast<uint32_t>(&obj);
-        return to_string(rawId);
+        int num = rand() * rand();
+        return to_string(num).substr(0, 6);
     }
 
     // Open and parse the users.csv file
