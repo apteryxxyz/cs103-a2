@@ -36,12 +36,12 @@ struct SubjectReport {
 class Report {
 public:
     string studentId, teacherNote, principalNote;
-    int attendance;
+    float attendance;
     vector<SubjectReport> subjects;
 
     Report(
         string s, string t, string p,
-        int a, vector<SubjectReport> ss
+        float a, vector<SubjectReport> ss
     ) {
         studentId = s;
         teacherNote = t;
