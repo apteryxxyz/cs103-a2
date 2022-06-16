@@ -60,4 +60,27 @@ public:
         if (typeInt == 4) return Type::Student;
         return Type::Base;
     }
+
+    // Converts a Type type to a string
+    static string resolveType(Type type) {
+        if (type == Type::Admin) return "Admin";
+        if (type == Type::Teacher) return "Teacher";
+        if (type == Type::Guardian) return "Guardian";
+        if (type == Type::Student) return "Student";
+        return "Unknown";
+    }
+
+    // Resolve a string to a int gender
+    static int resolveGender(string genderStr) {
+        if (genderStr == "M" || genderStr == "Male") return 1;
+        if (genderStr == "F" || genderStr == "Female") return 2;
+        return 0;
+    }
+
+    // Converts an integer gender to a string
+    static string resolveGender(int gender) {
+        if (gender == 1) return "Male";
+        if (gender == 2) return "Female";
+        return "Unknown";
+    }
 };
