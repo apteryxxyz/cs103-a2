@@ -14,11 +14,12 @@ public:
     vector<string> options;
 
     // Call this menu
-    void run(bool clearBefore, bool clearAfter) {
-        // Clear the screen if requested
-        if (clearBefore) Util::clearScreen();
-        cout << header;
+    void run() {
+        // Clear the screen
+        Util::clearScreen();
 
+        cout << header;
+		
         // Print the options
         for (int i = 0; i < options.size(); i++)
             cout << i + 1 << ". " << options[i] << endl;
@@ -27,8 +28,8 @@ public:
         int maxOption = options.size();
         int selectedOption = Util::requestInteger(1, maxOption);
         
-        // Clear the screen if requested
-        if (clearAfter) Util::clearScreen();
+        // Clear the screen
+        Util::clearScreen();
 
         // Call the handleOption method with the selected option
         bool runAgain = handleOption(selectedOption);
