@@ -35,7 +35,7 @@ public:
         bool runAgain = handleOption(selectedOption);
 
         // If should run again, do so
-        if (runAgain) run(clearBefore, clearAfter);
+        if (runAgain) run();
     }
 
     // Handle an option
