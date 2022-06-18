@@ -79,12 +79,32 @@ public:
         return Subject::Unknown;
     }
 
+    static string resolveSubject(Subject sub) {
+		if (sub == Subject::English) return "English";
+		if (sub == Subject::Arts) return "Arts";
+		if (sub == Subject::Health) return "Health";
+		if (sub == Subject::Languages) return "Languages";
+		if (sub == Subject::Mathematics) return "Mathematics";
+		if (sub == Subject::Science) return "Science";
+		if (sub == Subject::SocialStudies) return "Social Studies";
+		if (sub == Subject::Technology) return "Technology";
+		return "Unknown";
+    }
+
     static Grade resolveGrade(int graInt) {
 		if (graInt == 1) return Grade::Excellence;
 		if (graInt == 2) return Grade::Merit;
 		if (graInt == 3) return Grade::Achieved;
 		if (graInt == 4) return Grade::NotAchieved;
 		return Grade::Unknown;
+    }
+
+    static string resolveGrade(Grade gra) {
+		if (gra == Grade::Excellence) return "Excellence";
+		if (gra == Grade::Merit) return "Merit";
+		if (gra == Grade::Achieved) return "Achieved";
+		if (gra == Grade::NotAchieved) return "Not Achieved";
+		return "Unknown";
     }
 
 private:
