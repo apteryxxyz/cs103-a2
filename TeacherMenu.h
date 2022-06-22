@@ -54,6 +54,7 @@ public:
 
             cout << "Enter note.\n";
             string sr = Util::requestString();
+            cout << "\n";
 
             cout << "Enter your Subject.\n";
             int subInt = Menu::runMiniMenu({"English", "Arts", "Health", "Languages", "Mathematics", "Science", "SocialStudies", "Technology"});
@@ -61,12 +62,14 @@ public:
             // string subStr = Report::resolveSubject(subject);
             // cout << "Subject is " << subStr << endl;
             // int gr = Util::requestInteger(0, 13);
+            cout << "\n";
 
             cout << "Select a Grade below.\n";
             int graInt = Menu::runMiniMenu({"Excellence", "Merit", "Achieved", "NotAchieved"});
-            Grade grade = Report::resolveGrade(graInt);
-            string gradeStr = Report::resolveGrade(grade);
-            cout << "Grade is " << gradeStr << endl;
+            // Grade grade = Report::resolveGrade(graInt);
+            // string gradeStr = Report::resolveGrade(grade);
+            // cout << "Grade is " << gradeStr << endl;
+            cout << "\n";
 
             string id = Database::generateId();
             // Report *report = new Report(string s, string t, string p, int a, vector<SubjectReport> s);
@@ -104,7 +107,8 @@ public:
                     cout << "Subject: " << Report::resolveSubject(s.subject) << endl;
                     cout << "Grade: " << Report::resolveGrade(s.grade) << endl;
                     cout << "Note: " << s.note << endl;
-                }
+                    cout << "\n";
+                                }
             }
 
             cout << endl;
