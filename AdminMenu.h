@@ -10,11 +10,14 @@ private:
     Database* database;
 
 public:
-    AdminMenu(Database* database) {
+    AdminMenu(Database* database, User* user) {
         this->database = database;
-        header = "Welcome to the admin menu, select an option from below!\n";
-        // TODO: Add "Manage User" and "Manage Class"
-        options = { "List Users", "View User", "Create User", "List Classes", "View Class", "Create Class", "Logout" };
+        header = "Welcome " + user->firstName + ", select an option from below!\n";
+        options = {
+            "List Users", "View User", "Create User", "Delete User",
+            "List Classes", "View Class", "Create Class", "Delete Class",
+            "Logout"
+        };
     }
 
     bool handleOption(int option) {
@@ -53,7 +56,8 @@ public:
                 cout << "First Name: " << u->firstName << endl;
                 cout << "Last Name: " << u->lastName << endl;
                 cout << "Email Address: " << u->emailAddress << endl;
-                cout << "Account Type: " << int(u->type) << endl;
+                Type type = User::resolveType(int(u->type));
+                cout << "Account Type: " << User::resolveType(type) << endl;
                 cout << "Date Of Birth: " << u->dateOfBirth << endl;
                 cout << "Gender: " << User::resolveGender(u->gender) << endl;
                 cout << "Home Address: " << u->homeAddress << endl;
@@ -141,9 +145,9 @@ public:
                             cout << "First Name: " << s->firstName << endl;
                             cout << "Last Name: " << s->lastName << endl;
                             cout << "Email Address: " << s->emailAddress << endl;
-                            cout << "Account Type: " << int(s->type) << endl;
                             cout << "Date Of Birth: " << s->dateOfBirth << endl;
                             cout << "Gender: " << User::resolveGender(s->gender) << endl;
+                            cout << "Contact Number: " << s->contactNumber << endl;
                             cout << "Home Address: " << s->homeAddress << endl;
                             cout << "Class ID: " << s->classId << endl;
                         }
@@ -227,7 +231,35 @@ public:
             Util::pauseProgram();
         }
         
-        else if (option == 4) { // List Classes
+        else if (option == 4) { // Delete User
+            cout << "===== Delete User =====\n\n";
+            
+            // Get the search query from the admin
+            cout << "Enter ID or email to search for.\n";
+            string query = Util::requestString();
+
+            // Loop over every user in the database and
+            // check if the query matches their ID or email
+            for (int i = 0; i < database->users.size(); i++) {
+                auto u = database->users[i];
+                
+                // Skip if query does not equal ID or email
+                if (u->id != query && u->emailAddress != query) continue;
+
+                // Remove the user from the database
+                database->users.erase(database->users.begin() + i);
+                database->save();
+				
+                cout << "\nDeleted user with the ID " << u->id << "." << endl;
+                Util::pauseProgram();
+                return true;
+            }
+
+            cout << "\nNo user found for query!\n";
+            Util::pauseProgram();
+        }
+
+        else if (option == 5) { // List Classes
             cout << "===== List Of Classes =====\n\n";
             cout << "ID - Year Level\n";
 
@@ -240,7 +272,7 @@ public:
             Util::pauseProgram();
         }
         
-        else if (option == 5) { // View Class
+        else if (option == 6) { // View Class
             cout << "===== View Class =====\n\n";
 
             cout << "Enter class ID to search for.\n";
@@ -295,7 +327,7 @@ public:
             Util::pauseProgram();
         }
         
-        else if (option == 6) { // Create Class
+        else if (option == 7) { // Create Class
             cout << "===== Create Class =====\n\n";
             
             cout << "Enter year level.\n";
@@ -304,13 +336,42 @@ public:
             string id = Database::generateId();
             Class* xlass = new Class(id, yLevel);
             database->classes.push_back(xlass);
-
             database->save();
+			
             cout << "\nCreated class with the ID: " << id << endl;
             Util::pauseProgram();
         }
-        
-        else if (option == 7) { // Exit
+
+        else if (option == 8) { // Delete Class
+		    cout << "===== Delete Class =====\n\n";
+			
+			// Get the search query from the admin
+			cout << "Enter ID to search for.\n";
+			string query = Util::requestString();
+			
+			// Loop over every class in the database and
+			// check if the query matches their ID
+            for (int i = 0; i < database->classes.size(); i++) {
+                auto c = database->classes[i];
+
+                // Skip if query does not equal ID
+                if (c->id != query) continue;
+
+                // Remove the class from the database
+                database->classes.erase(database->classes.begin() + i);
+                database->save();
+
+                cout << "\nDeleted class with the ID " << c->id << "." << endl;
+                Util::pauseProgram();
+                return true;
+            }
+			
+			cout << "\nNo class found for query!\n";
+			Util::pauseProgram();
+            return true;
+        }
+		
+        else if (option == 9) { // Logout
             return false;
         }
         
