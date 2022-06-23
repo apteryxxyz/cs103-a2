@@ -56,7 +56,8 @@ public:
                 cout << "First Name: " << u->firstName << endl;
                 cout << "Last Name: " << u->lastName << endl;
                 cout << "Email Address: " << u->emailAddress << endl;
-                cout << "Account Type: " << int(u->type) << endl;
+                Type type = User::resolveType(int(u->type));
+                cout << "Account Type: " << User::resolveType(type) << endl;
                 cout << "Date Of Birth: " << u->dateOfBirth << endl;
                 cout << "Gender: " << User::resolveGender(u->gender) << endl;
                 cout << "Home Address: " << u->homeAddress << endl;
@@ -144,9 +145,9 @@ public:
                             cout << "First Name: " << s->firstName << endl;
                             cout << "Last Name: " << s->lastName << endl;
                             cout << "Email Address: " << s->emailAddress << endl;
-                            cout << "Account Type: " << int(s->type) << endl;
                             cout << "Date Of Birth: " << s->dateOfBirth << endl;
                             cout << "Gender: " << User::resolveGender(s->gender) << endl;
+                            cout << "Contact Number: " << s->contactNumber << endl;
                             cout << "Home Address: " << s->homeAddress << endl;
                             cout << "Class ID: " << s->classId << endl;
                         }
