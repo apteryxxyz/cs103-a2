@@ -1,53 +1,70 @@
-#include <string>
-#include <vector>
 #include <iostream>
 
 #include "Database.h"
-#include "User.h"
-#include "Admin.h"
-#include "Teacher.h"
-#include "Guardian.h"
-#include "Student.h"
-#include "Report.h"
-#include "Class.h"
+#include "AdminMenu.h"
+#include "TeacherMenu.h"
+#include "StudentMenu.h"
 
 using namespace std;
 
 int main() {
-    Database database;
-    database.load();
+    Database db;
+    db.load();
 
-    string id1 = Database::generateId(),
-        id2 = Database::generateId(),
-        id3 = Database::generateId();
+    cout << "===== School Information System =====\n";
 
-    User user(id1, "John", "Smith", "21/11/1976", 1, "111", "10 Downing Street", "jd@mail.com", "p@ssw0rd");
-    Teacher* teacher = new Teacher(user, id1);
-    Guardian* guardian = new Guardian(user, { id1 });
-	Student* student = new Student(user, id2);
+	// Get search query from user
+    cout << "\nEnter your user ID or email to login.\n";
+    string query = Util::requestString();
 
-    Class* xlass = new Class(id2, 5);
-	Report* x = new Report(id3, "T Note", "P Note", 100, {
-        { Subject::English, Grade::Merit, "Note" },
-        { Subject::Arts, Grade::NotAchieved, "Note" },
-    });
+    bool userFound = false;
 
-    database.users.push_back(teacher);
-	database.users.push_back(guardian);
-	database.users.push_back(student);
-	database.classes.push_back(xlass);
-	database.reports.push_back(x);
-	
-    cout << "Users\n";
-	for (auto i : database.users)
-        cout << i-> toString() << endl;
-    cout << "\nClasses\n";
-	for (auto i : database.classes)
-        cout << i-> toString() << endl;
-	cout << "\nReports\n";
-	for (auto i : database.reports)
-		cout << i-> toString() << endl;
-    
-    database.save();
-    return 0;
+	// Loop over every user in the database
+    for (auto u : db.users) {
+		// If id or email does not equal the query, skip this user
+        if (u->id != query && u->emailAddress != query) continue;
+        userFound = true;
+
+		// Loop 3 times if password is incorrect
+        for (int i = 0; i < 3; i++) {
+			// Get password from user
+            cout << "Enter your account password.\n";
+            string password = Util::requestString();
+        
+            if (u->password == password) {
+			    // If password is correct direct user to menu
+                if (u->type == Type::Admin) {
+                    AdminMenu adminMenu(&db, u);
+                    adminMenu.run();
+                } else if (u->type == Type::Teacher) {
+                    TeacherMenu teacherMenu(&db, u);
+                    teacherMenu.run();
+                } else {
+                    StudentMenu studentMenu(&db, u);
+                    studentMenu.run();
+                }
+                break;
+            } else {
+                // If password is incorrect, print error message
+                cout << "Incorrect passowrd, try again.\n";
+                if (i == 2) {
+					// If password is incorrect 3 times, print error message and return
+                    cout << "You have exceeded the maximum number of login attempts.\n";
+                    return 0;
+                }
+            }
+        }
+
+        break;
+    }
+
+    if (!userFound) {
+		// If no user was found with the given id or email, print an error message
+        cout << "Account not found.\n";
+        Util::pauseProgram();
+        Util::clearScreen();
+    }
+
+    db.save();
+    return main();
 }
