@@ -211,11 +211,19 @@ public:
                 database->users.push_back(u);
             }
             else if (type == Type::Guardian) {
-                // TODO: Add ability to add multiple children
-                cout << "Enter child ID.\n";
-                string cId = Util::requestString();
-                
-                Guardian* u = new Guardian(user, { cId });
+                vector<string> studentIds;
+
+                cout << "Enter children IDs separated by commas.\n";
+                string cIds = Util::requestString();
+                stringstream ss(cIds);
+
+                while (ss.good()) {
+                    string id;
+                    getline(ss, id, ',');
+                    studentIds.push_back(id);
+                }
+
+                Guardian* u = new Guardian(user, studentIds);
                 database->users.push_back(u);
             }
             else if (type == Type::Student) {
@@ -249,7 +257,7 @@ public:
                 // Remove the user from the database
                 database->users.erase(database->users.begin() + i);
                 database->save();
-				
+                
                 cout << "\nDeleted user with the ID " << u->id << "." << endl;
                 Util::pauseProgram();
                 return true;
@@ -337,20 +345,20 @@ public:
             Class* xlass = new Class(id, yLevel);
             database->classes.push_back(xlass);
             database->save();
-			
+            
             cout << "\nCreated class with the ID: " << id << endl;
             Util::pauseProgram();
         }
 
         else if (option == 8) { // Delete Class
-		    cout << "===== Delete Class =====\n\n";
-			
-			// Get the search query from the admin
-			cout << "Enter ID to search for.\n";
-			string query = Util::requestString();
-			
-			// Loop over every class in the database and
-			// check if the query matches their ID
+            cout << "===== Delete Class =====\n\n";
+            
+            // Get the search query from the admin
+            cout << "Enter ID to search for.\n";
+            string query = Util::requestString();
+            
+            // Loop over every class in the database and
+            // check if the query matches their ID
             for (int i = 0; i < database->classes.size(); i++) {
                 auto c = database->classes[i];
 
@@ -365,12 +373,12 @@ public:
                 Util::pauseProgram();
                 return true;
             }
-			
-			cout << "\nNo class found for query!\n";
-			Util::pauseProgram();
+            
+            cout << "\nNo class found for query!\n";
+            Util::pauseProgram();
             return true;
         }
-		
+        
         else if (option == 9) { // Logout
             return false;
         }
