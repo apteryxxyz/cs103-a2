@@ -177,7 +177,7 @@ public:
                     Util::pauseProgram();
                     return true;
                 }
-
+              
                 cout << "\nEnter attendance percent.\n";
                 float attend = Util::requestFloat(0, 100);
 
